@@ -1,0 +1,16 @@
+{
+  "name": "javascript-tdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "author": "Dane King",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.4.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.6"
+  }
+}
