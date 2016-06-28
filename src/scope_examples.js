@@ -1,34 +1,29 @@
-/* jshint undef:false, unused: false */
+/* jslint node:true*/
+'use strict';
 
-//Global scope are visible to all levels
-//Declare a global variable here and assign a value
-var globalVar=true;
+var isUndefined=false;
 
-//Function scope is only visible to a function
-function fnScope(num){
-  var functionVar=2;
-  return functionVar + num;
-}
-
-//Function sets values on this object
-function fnScopeThis(num){
-  this.functionVar=2;
-  this.functionVar += num;
+/* jshint undef:true, unused:false*/
+function multiply(a,b){
+  isUndefined=(this===undefined);
+  return a*b;
 }
 
 
-
-function outer(){
-  var outVar=5;
-  var inner=function innerFn(){
-    return outVar;
-  };
-  return inner();
-}
-
-function outerError(){
-  var inner=function innerFn(){
-    return outVar;
-  };
-  return inner();
-}
+var calc = {
+  num: 0,
+  increment: function() {
+    console.log(this === calc); // => true
+    this.num += 1;
+    return this.num;
+  }
+};
+var Foo=function(){
+  this.defaultValue='default';
+};
+var myDog = Object.create({
+  sayName: function() {
+     console.log(this === myDog); // => true
+     return this.name;
+  }
+});

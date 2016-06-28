@@ -10,44 +10,62 @@ describe('Scope', function() {
     if(global.functionVar){delete global.functionVar;}
 
   });
-  describe('Global', function() {
-    it('should have access to global variables', function() {
-      expect(global.globalVar).toBeDefined();
-    });
-    it('should not have access through function to variables', function() {
-      var assignFn = global.fnScope();
-      expect(assignFn.functionVar).not.toBeDefined();
-    });
-    it('should set a global if this is called', function() {
-      global.fnScopeThis(3);
-      expect(global.functionVar).toBe(5);
+  describe("Global", function () {
+    it("should be able to set global this value", function () {
+      /* globals sum */
+      sum(2,3);
+      expect(global.myNumber).toEqual(20);
     });
 
-    it('should not be global if this is called within an object', function() {
-      var obj = {};
-      obj.fn = global.fnScopeThis;
-      obj.fn(3);
-      expect(global.functionVar).not.toBeDefined();
+    it("should set global value when using this in an inner function non strict", function () {
+      /* globals numbers */
+      numbers.sum();
+      expect(global.globalVar).toEqual(true);
     });
 
-    it('should be an object scope if this is called within an object', function() {
-      var obj = {};
-      obj.fn = global.fnScopeThis;
-      obj.fn(3);
-      expect(obj.functionVar).toBe(5);
+    it("should be undefined when using this in strict mode", function () {
+      /* globals multiply */
+      multiply(2,3);
+      expect(global.isUndefined).toEqual(true);
+    });
+  });
+  describe("Method", function () {
+    it("should set object variable when using this", function () {
+      /* globals calc*/
+      calc.num=5;
+      expect(calc.increment()).toEqual(6);
+    });
+    it("should use object context when inherited", function () {
+      /*globals myDog*/
+      myDog.name="Fido";
+      expect(myDog.sayName()).toEqual('Fido');
+    });
+
+    it("should use global when method is seperated from object", function () {
+      /* global ns_calc */
+      ns_calc.num=1;
+      function asycFn(fn){
+        fn.call();
+        expect(global.num).toEqual(1);
+      }
+      setTimeout(asycFn(ns_calc.increment), 0);
+
+    });
+  });
+  describe("Constructor", function () {
+    /*global Foo */
+    it("should use object instance for this", function () {
+      var foo=new Foo();
+      expect(foo.defaultValue).toEqual('default');
+    });
+    it("should look ok if new is missing", function () {
+      var foo=Foo();
+      expect(foo.defaultValue).toEqual('default');
+      expect(window.defaultValue).toEqual('default');
+
+      expect(foo).toEqual(window);
     });
 
   });
 
-  describe('Nested Functions', function() {
-    // body...
-    it('should be able to access outer scope', function() {
-      var expectedOuterValue=outer();
-      expect(expectedOuterValue).toBe(5);
-    });
-
-    it('should throw error when cannot access outer scope', function() {
-      expect(function(){outerError()}).toThrowError(ReferenceError);
-    });
-  });
 });

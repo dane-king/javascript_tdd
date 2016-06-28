@@ -15,6 +15,7 @@
     "_",
     "expect",
     "describe",
+    "beforeEach",
     "it",
     "require",
     "define",
