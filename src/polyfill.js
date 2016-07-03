@@ -1,4 +1,5 @@
 (function() {
+  //similar to .extend in angular or JQuery
   if (typeof Object.assign !== 'function') {
     Object.assign = function(target) {
       'use strict';
