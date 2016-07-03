@@ -13,17 +13,13 @@ function multiply(a,b){
 var calc = {
   num: 0,
   increment: function() {
-    console.log(this === calc); // => true
     this.num += 1;
     return this.num;
   }
 };
-var Foo=function(){
-  this.defaultValue='default';
-};
+
 var myDog = Object.create({
   sayName: function() {
-     console.log(this === myDog); // => true
      return this.name;
   }
 });

@@ -58,11 +58,11 @@ describe('Scope', function() {
       var foo=new Foo();
       expect(foo.defaultValue).toEqual('default');
     });
+
     it("should look ok if new is missing", function () {
       var foo=Foo();
       expect(foo.defaultValue).toEqual('default');
       expect(window.defaultValue).toEqual('default');
-
       expect(foo).toEqual(window);
     });
 
